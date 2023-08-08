@@ -1,0 +1,9 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    {% include 'home/navbar.html'%}
+        <div style="min-height: 88vh;">
+         
+            {{ form.render }}
+        </div>
+    {% include 'home/footer.html'%}
+{% endblock %}

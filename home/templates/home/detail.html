@@ -1,0 +1,37 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    {% include 'home/navbar.html'%}
+        <div style="display: flex; width: 100%;">
+            <div class="product-context">
+                <h1>{{product.name}}</h1>
+                <p1>{{product.description}}</p1>
+                <button type="button" class="btn btn-success" style="width: 100%; margin-top: auto; height: 4rem; font-size: 1.55rem;" onclick="location.href = '/addToCart/{{product.id}}'">Add to Cart</button>
+            </div>
+            <div class="product-img">
+                <img src="{{product.image.url}}" alt="{{product.name}}">
+            </div>
+        </div>
+    {% include 'home/footer.html' %}
+    <style>
+        .product-context{
+            width: 50%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-img{
+            display: flex;
+            width: 50%;
+            padding: 3rem;
+            height: 93vh;
+            max-width: 50%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-img img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+{% endblock %}

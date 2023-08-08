@@ -1,0 +1,71 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    {% include 'home/navbar.html' %}
+        <div class="form-container">
+            <form method="post" action="/addProduct/" enctype="multipart/form-data" class="product-form">
+                {% csrf_token %}
+                <div class="form-field">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                </div>
+                <div class="form-field">
+                    {{ form.description.label_tag }}
+                    {{ form.description }}
+                </div>
+                <div class="form-field">
+                    {{ form.price.label_tag }}
+                    {{ form.price }}
+                </div>
+                <div class="form-field">
+                    {{ form.image.label_tag }}
+                    {{ form.image }}
+                </div>
+                <button type="submit" class="btn btn-success">Add Product</button>
+            </form>
+        </div>
+    {% include 'home/footer.html' %}
+    <style>
+        .form-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        .form-field {
+            margin-bottom: 20px;
+        }
+    
+        .form-field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    
+        .product-form input[type="text"],
+        .product-form textarea,
+        .product-form select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    
+        .product-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .product-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+{% endblock %}
+

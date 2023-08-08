@@ -1,0 +1,39 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    {% include 'home/navbar.html' %}
+        <div class="container mt-4" style="min-height: 85vh;">
+            <h1>Checkout</h1>
+            <h3>Cart Items:</h3>
+            <ul class="list-group mt-3">
+                {% for cart_item in cart_items %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span>{{ cart_item.product.name }}</span>
+                            <span class="badge bg-secondary mx-2">x{{ cart_item.quantity }}</span>
+                            <span class="badge bg-info">Price: {{ cart_item.product.price }} zł</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <h3>Total Price: {{ total_price }} zł</h3>
+            <h3>Address:</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea class="form-control" name="address" id="address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" name="email" id="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Proceed to payment</button>
+            </form>
+            <div style="display: flex; justify-content: center; ">
+                <div id="paypal-button-container"></div>
+            </div>
+        </div>
+        
+
+    {% include 'home/footer.html' %}
+{% endblock %}

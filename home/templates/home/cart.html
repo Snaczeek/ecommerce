@@ -1,0 +1,28 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    {% include 'home/navbar.html' %}
+        <div class="container mt-4" style="min-height: 85vh;">
+            <h1>Cart Items:</h1>
+            <ul class="list-group mt-3">
+                {% for item in cart %}
+                    {% for cart_item in item.items.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <span>{{ cart_item.product.name }}</span>
+                                <span class="badge bg-secondary mx-2">x{{ cart_item.quantity }}</span>
+                                <span class="badge bg-info">Price: {{ cart_item.product.price }} zł</span>
+                            </div>
+                            <button onclick="location.href='/removeFromCart/{{ cart_item.id }}'" class="btn btn-danger">Remove</button>
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+            {% for p in cart %}
+                <div class="text-end mt-3">
+                    <h5>Total Price: {{ p.totalPrice }} zł</h5>
+                </div>
+            {% endfor %}
+            <button onclick="location.href = '/checkout/'" class="btn btn-success" style="width: 100%; height: 3rem;">Proceed to Checkout</button>
+        </div>
+    {% include 'home/footer.html' %}
+{% endblock %}

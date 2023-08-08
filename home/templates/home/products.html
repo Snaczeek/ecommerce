@@ -1,0 +1,106 @@
+<div class="sorting-options mt-3">
+    <span class="sort-label">Sort by:</span>
+    <div class="btn-group" role="group" aria-label="Sorting Options">
+        <a href="?sort=price_low" class="btn btn-outline-primary">Price (Low to High)</a>
+        <a href="?sort=price_high" class="btn btn-outline-primary">Price (High to Low)</a>
+        <a href="?sort=alphabetical" class="btn btn-outline-primary">Alphabetically</a>
+    </div>
+</div>
+<div class="product-display">
+    {% for p in product %}
+        <div class="product" >
+            <div style="height: 250px; width: 350px; display: flex; justify-content: center; align-items: center; margin: 5px;" >
+                <img src="{{p.image.url}}" alt="{{p.name}}" style="max-height: 250px; max-width: 350px;">
+            </div>
+            <p1 style="margin: 2px auto 0 10px; justify-content: start;">{{p.name}}</p1>
+            <hr style="border-top: 1px solid grey; width: 95%; margin: 5px;">
+            <div style="display: flex; align-items: center; flex-wrap: wrap; width: 100%; padding: 10px;">
+                <button type="button" class="btn btn-outline-success" style="border-radius: 0;" onclick="location.href = 'addToCart/{{p.id}}'">Add to Cart</button>
+                <button type="button" class="btn btn-outline-secondary" style="border-radius: 0; margin-left: 5px;" 
+                        onclick="location.href = '/product/{{p.id}}'">View</button>
+                {% if user.is_superuser %}
+                    <button type="button" class="btn btn-outline-primary" style="border-radius: 0; margin-left: 5px;" onclick="location.href = 'editProduct/{{p.id}}'">Edit</button>     
+                {% endif %}
+                <p1 style="margin-left: auto;">{{p.price}} zł</p1>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if product.has_previous %}
+            <a href="?sort={{ request.GET.sort }}&page=1" class="page-link">&laquo; first</a>
+            <a href="?sort={{ request.GET.sort }}&page={{ product.previous_page_number }}" class="page-link">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ product.number }} of {{ product.paginator.num_pages }}.
+        </span>
+
+        {% if product.has_next %}
+            <a href="?sort={{ request.GET.sort }}&page={{ product.next_page_number }}" class="page-link">next</a>
+            <a href="?sort={{ request.GET.sort }}&page={{ product.paginator.num_pages }}" class="page-link">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+<style>
+    .product {
+        max-height: 22rem;
+        display: flex; flex-direction: column; 
+        max-width: 25rem; justify-content: center;
+        align-items: center;
+        -webkit-box-shadow: 0px 0px 34px 2px rgba(145, 146, 150, 1);
+        -moz-box-shadow: 0px 0px 34px 2px rgba(145, 146, 150, 1);
+        box-shadow: 0px 0px 34px 2px rgba(145, 146, 150, 1);
+        margin: 20px;
+        /* margin-right: auto; */
+    }
+
+
+    .product-display {
+        min-height: 80vh;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 0 7em 0 7em;
+        /* justify-content: center; */
+    }
+    .pagination {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .page-link {
+        color: #007bff;
+        text-decoration: none;
+        margin: 0 5px;
+        padding: 5px 8px;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+    }
+
+    .page-link:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .current {
+        margin: 0 10px;
+    }
+
+    .step-links{
+        display: flex;
+    }
+
+    .sorting-options {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sort-label {
+        line-height: 35px;
+        margin-right: 10px;
+    }
+</style>

@@ -1,0 +1,12 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    <div class="container mt-5">
+        <h2>Update Order Status</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary mt-3">Update Status</button>
+            <a href="{% url 'all-order' %}" class="btn btn-secondary mt-3">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'home/base.html' %}
+{% block content %}
+    {% include 'home/navbar.html' %}
+    <div class="container mt-5" style="min-height: 83vh;">
+        <h2>Order Details</h2>
+        {% for order_item in order %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    Order Status: {{ order_item.status }}
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Owner:</strong> {{ order_item.owner }}
+                    </p>
+                    <h5 class="card-title">Order Items:</h5>
+                    <ul class="list-group">
+                        {% for item in order_item.products.all %}
+                            <li class="list-group-item">{{ item.product.name }} - {{ item.quantity }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="card-text mt-3">
+                        <strong>Total Price:</strong> {{ order_item.price }} zł
+                    </p>
+                    <p class="card-text mt-3">
+                        <strong>Paid</strong> {{ order_item.paid }} 
+                    </p>
+                    <p class="card-text">
+                        <strong>Address:</strong> {{ order_item.address }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Email:</strong> {{ order_item.email }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Order Created:</strong> {{ order_item.created }}
+                    </p>
+                    {% if user.is_superuser %}
+                        <button onclick="location.href = '/updateOrder/{{order_item.id}}'">Update Status</button>
+                    {% endif %}
+                    {% if order_item.paid == False%}
+                        <button onclick="location.href = '/payment/{{order_item.id}}'">Pay for order</button>
+                    {% endif %}
+            </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'home/footer.html' %}
+{% endblock %}
